@@ -12,7 +12,6 @@ If you're using Linux, install nodejs and npm(node-package-manager) by running f
 
 Update : `sudo apt-get update` <br>
 Install NodeJS : `sudo apt-get install nodejs`<br>
-
 Install npm : `sudo apt-get install npm`<br>
 
 To install ejs (Embedded-JavaScript), run the following command in your Terminal.<br>
