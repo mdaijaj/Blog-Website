@@ -10,11 +10,12 @@ token work when if you post blogs after post you can see only your blogs.
 
 If you're using Linux, install nodejs and npm(node-package-manager) by running follow commands in your terminal
 
-Update : `sudo apt-get update`
-Install NodeJS : `sudo apt-get install nodejs`
-Install npm : `/sudo apt-get install npm`
+Update : `sudo apt-get update` <br>
+Install NodeJS : `sudo apt-get install nodejs`<br>
 
-To install ejs (Embedded-JavaScript), run the following command in your Terminal.
+Install npm : `sudo apt-get install npm`<br>
+
+To install ejs (Embedded-JavaScript), run the following command in your Terminal.<br>
 Install ejs :`npm install ejs --save`
 
 ### How to run?
