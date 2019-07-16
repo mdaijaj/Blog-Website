@@ -8,11 +8,24 @@ token work when if you post blogs after post you can see only your blogs.
 
 ## Requirments
 
-If you're using Linux, install nodejs and npm(node-package-manager) by running follow commands in your terminal
+If you're using Linux, install nodejs and npm(node-package-manager) by running follow commands in your terminal and you have to install modules.
 
 Update : `sudo apt-get update` <br>
 Install NodeJS : `sudo apt-get install nodejs`<br>
 Install npm : `sudo apt-get install npm`<br>
+Install mysql : `sudo apt-get install mysql`<br>
+Install knex : `sudo apt-get install knex`<br>
+Install Express : `npm install Express`<br>
+Install jwt : `npm install jsonwebtoken`<br>
+Install jwt-decode : `npm install jwt-decode`<br>
+Install body-parser : `npm install body-parser`<br>
+Install cookie : `npm install cookie-parser`<br>
+
+
+
+
+
+
 
 To install ejs (Embedded-JavaScript), run the following command in your Terminal.<br>
 Install ejs :`npm install ejs --save`
