@@ -3,33 +3,49 @@ module.exports=(blog,knex)=>{
 
 	blog.post('/add_blogs', (req,res)=>{
 		var blog_title=req.body.blog_title;
-		var image_link=req.body.image_link;
+		var description=req.body.description;
 		var blog_text=req.body.blog_text;
-		var token = req.headers.cookie;
-		var email=jwt_decode(token).email
 
-		knex('blog_table').insert([{id:null,email:email, blog_title:blog_title, image_link:image_link, blog_text:blog_text}])
+		var token = req.headers.cookie;
+
+		token = token.split(';')
+		token = token[token.length-1]
+		if(token.startsWith(" qwsdr=")){
+			console.log(token)
+			token = token.slice(7, token.length-1)
+			console.log(token)
+			var username = jwt_decode(token);
+			console.log(username)
+		}
+		
+		else{
+			// var username = jwt_decode(token[token.length-1]).email;
+			var username=jwt_decode(token).email;
+		}
+
+		knex('blog_table')
+		.insert({id: null, email: username, blog_title: blog_title, description: description, blog_text: blog_text})
 		.then((result)=>{
+			console.log(result);
 			knex
-			.select('*')
-			.from('blog_table')
-			.then((selectresult) => {
-				console.log(__dirname);
-				res.render('login_home.ejs', {data: selectresult});
+			.select("*")
+			.from("blog_table")
+			.then((select_result) => {
+				// console.log(__dirname);
+				return res.render(__dirname +'/views/login_home.ejs', {data: select_result});
 			})
 			.catch((err) => {
 				console.log(err)
 			})
-		})
+		}) 
 		.catch((err)=>{
-			console.log("done")
+			console.log(err)
 			return res.send("data is allready exists");
 		})
 
 	// 	var promise1 = function () {
  //  			return res.send(Promise.reject());
 	// 	};
-
 	})
 	
 	blog.get('/all_blogs/:id', (req,res)=>{
@@ -69,3 +85,5 @@ module.exports=(blog,knex)=>{
 		})
 	})		
 }
+
+

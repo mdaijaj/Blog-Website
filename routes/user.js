@@ -8,10 +8,11 @@ module.exports=(user,knex,jwt)=>{
 		var password=req.body.password;
 		var user = req.body     			 //get all body data from user
 		// console.log(user)
-		knex('users').insert({ name:name, email:email, password:password})
+		knex('users')
+		.insert({ name:name, email:email, password:password})
 		.then((data)=>{
-			res.sendFile("/home/aijaj/Desktop/project/Blogs/login.html")
-			// return res.send("sign_up is successfully!")
+			console.log("sign_up is successfully!")
+			return res.sendFile(__dirname +"/views/login.html")
 		})
 		.catch((err)=>{
 			console.log(err.message);
@@ -38,7 +39,7 @@ module.exports=(user,knex,jwt)=>{
 		.then((result) => {
 			console.log(result)
 			if(result.length>0){
-				return res.render('login_home.ejs', {data: result})
+				return res.render(__dirname +'/views/login_home.ejs', {data: result})
 			}else{
 				res.send("Invalid username and password")
 			}
