@@ -24,6 +24,9 @@
 			border-color: blue;
 			font-size: 18px;
 		}
+		.h2{
+			color: red;
+		}
 	</style>
 </head>
 <body>
@@ -35,10 +38,15 @@
 					<input type="text" name="name" placeholder="Name" required=""><br><br>
 					<input type="text" name="surname" placeholder="Surname" required=""><br><br>
 					<input type="email" name="email" placeholder="Email" required=""><br><br>
-					<input type="text" name="password" placeholder="Create Password" required=""><br><br>
-					<input type="text" name="" placeholder="Conform Password" required=""><br><br>
+					<input type="password" name="password" placeholder="Create Password" required=""><br><br>
+					<input type="password" name="confirm_password" placeholder="Conform Password" required=""><br><br>
 					<input type="submit" name="" value="Submit">
 					<input type="reset" name="" value="Reset">
+				</form><br>
+
+				<form action="/user_login">
+					<h2 class="h2">If you sign up then click on login button...</h2>
+					<input type="submit" value="Login">
 				</form>
 			</div>
 		</center>

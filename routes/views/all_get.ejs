@@ -37,6 +37,8 @@
 <body bgcolor="#798020">
 	<ul>
 	  <li><a class="active" href="/all_get">Get Blogs</a></li>
+	  <li><a href="/delete_blog">Delete Blog</a></li>
+	  <li><a href="/update_blog">Edit Blog</a></li>
 	  <li><a href="/post_blog">Post Blog</a></li>
 	  <li><a href="/login_home">Home</a></li>
 	</ul>
@@ -44,8 +46,8 @@
 		<% for (let i of data) { %>
 		<center><div class="runDiv">
 			<h3> <%= i.email %> </h3>
-			<h3> <%= i.blog_title %> </h3>
-			<p> <%= i.blog_text %> </p>
+			<h3> Title :  <%= i.title %> </h3>
+			<p> Description :  <%=  i.description %> </p>
 		</div></center>
 		<% } %>
 	</div>

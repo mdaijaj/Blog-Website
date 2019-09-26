@@ -1,8 +1,50 @@
 const jwt_decode = require('jwt-decode')
 module.exports=(blog,knex)=>{
 
+	// blog button path
+	blog.get("/post_blog",(req,res)=>{
+		return res.sendFile(__dirname +"/views/post_blog.html")
+	})
+
+	blog.get("/update_blog",(req,res)=>{
+		return res.sendFile(__dirname +"/views/update.html")
+	})
+
+	blog.get('/delete_blog',(req,res)=>{
+		return res.sendFile(__dirname + "/views/delete_blog.html")
+	})
+
+	blog.get("/all_get",(req,res)=>{
+		var users = req.headers.cookie;
+		// console.log(users)
+		users = users.split(';')
+		users = users[users.length-1]
+		if(users.startsWith	(" qwsdr=")){
+			users = users.slice(7, users.length-1)
+			console.log(users)
+			var username = jwt_decode(users).email;
+			console.log(username)
+		}
+		else{
+			// var username = jwt_decode(users[users.length-1]).email;
+			var username= jwt_decode(users).email;
+		}
+	
+		knex
+		.select("*")
+		.from('blog_table')
+		.where('email', username)
+		.then((blogdata) => {
+			console.log(blogdata)
+			return res.render(__dirname+'/views/all_get.ejs', {data: blogdata})
+		})
+		.catch((err) => {
+			res.send(err);
+		})
+	})	
+
 	blog.post('/add_blogs', (req,res)=>{
-		var blog_title=req.body.blog_title;
+		var title=req.body.title;
 		var description=req.body.description;
 		var blog_text=req.body.blog_text;
 
@@ -17,21 +59,18 @@ module.exports=(blog,knex)=>{
 			var username = jwt_decode(token);
 			console.log(username)
 		}
-		
-		else{
+		// else{
 			// var username = jwt_decode(token[token.length-1]).email;
-			var username=jwt_decode(token).email;
-		}
-
+		var username=jwt_decode(token).email;
+		// }
 		knex('blog_table')
-		.insert({id: null, email: username, blog_title: blog_title, description: description, blog_text: blog_text})
+		.insert({id: null, email: username, title: title, description: description, blog_text: blog_text})
 		.then((result)=>{
 			console.log(result);
 			knex
 			.select("*")
 			.from("blog_table")
 			.then((select_result) => {
-				// console.log(__dirname);
 				return res.render(__dirname +'/views/login_home.ejs', {data: select_result});
 			})
 			.catch((err) => {
@@ -42,10 +81,6 @@ module.exports=(blog,knex)=>{
 			console.log(err)
 			return res.send("data is allready exists");
 		})
-
-	// 	var promise1 = function () {
- //  			return res.send(Promise.reject());
-	// 	};
 	})
 	
 	blog.get('/all_blogs/:id', (req,res)=>{
@@ -64,7 +99,8 @@ module.exports=(blog,knex)=>{
 		var id=req.params.id;
 		var title=req.body.title;
 		var blog_text= req.body.blog_text;
-		knex('blog_table').where('id',id).update({title:title, blog_text:blog_text})
+		knex('blog_table').where('id',id)
+		.update({title:title, blog_text:blog_text})
 		.then((data)=>{
 			console.log("data is update successfully");
 			return res.send(data);
@@ -85,5 +121,4 @@ module.exports=(blog,knex)=>{
 		})
 	})		
 }
-
 

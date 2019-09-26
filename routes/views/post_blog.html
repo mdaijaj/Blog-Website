@@ -57,17 +57,20 @@
 	<h1><center>Blogs</center></h1>
 	<ul>
 	  <li><a class="active" href="post_blog">Post Blog</a></li>
+	  <li><a href="/update_blog">Edit Blog</a></li>
+	  <li><a href="/delete_blog">Delete Blog</a></li>
 	  <li><a href="all_get">Get Blog</a></li>
 	  <li><a href="login_home">Home</a></li>
+	  
 	</ul>
 	<h1><center>Post Blogs</center></h1>
 	<div class="main_div">
 		<form action="/add_blogs" method="POST">
 		  <label for="lname">Blog Title  : </label>
-		  <input type="text"  name="blog_title" placeholder="Title..."><br><br>
+		  <input type="text"  name="title" placeholder="Title..."><br><br>
 
 		  <label for="lname">Description:</label>
-		  <input type="text"  name="Description" placeholder="Enter Description..."><br><br>
+		  <input type="text"  name="description" placeholder="Enter Description..."><br><br>
 
       	  <label for="subject">Blog text : </label><br><br>
 		  <textarea name="blog_text" placeholder="Some text..."></textarea><br><br>

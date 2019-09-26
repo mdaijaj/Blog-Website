@@ -37,19 +37,22 @@
 <body bgcolor="#798020">
 	<h1><center>Home </center></h1>
 	<ul>
-	  <li><a class="active" href="/login_home">Home</a></li>
-	  <li><a href="/post_blog">Post Blog</a></li>
-	  <li><a href="/all_get">Get Blogs</a></li>
-	</ul>
+		<li><a class="active" href="/login_home">Home</a></li>
+		<li><a href="/post_blog">Post Blog</a></li>
+		<li><a href="/all_get">Get Blogs</a></li>
+		<li><a href="/update_blog">Update Blog</a></li>
+		<li><a href="/delete_blog">Delete Blog</a></li>
+	  </ul>
 	<div class="all_blogs"> <h1><center> Blogs</center></h1><br><br>
 		<% for (let i of data) { %>
 		<center><div class="runDiv">
 			<h3> <%= i.email %> </h3>
-			<h3> <%= i.blog_title %> </h3>
-			<p> <%= i.blog_text %> </p>
+			<h3> Title  : <%= i.title %> </h3>
+			<p> Description :  <%= i.description %> </p>
 		</div></center>
 		<% } %>
 	</div>
+
 
 </body>
 </html>

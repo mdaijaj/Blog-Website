@@ -41,16 +41,16 @@
 	</style>
 </head>
 <body bgcolor="#798020">
-	<h1><center> Home Page</center></h1>
+	<h1><center> Home Page</center></h1>	
 	<ul>
 		<li><a class="active" href="/home">Home</a></li>
-	</ul>	
+	</ul>
 	<dir class="blogs"> <h1><center> Blogs</center></h1>
 		<% for (let i of data) { %>
 		<center><div class="runDiv">
 			<h2> <%= i.email %> </h2>
-			<h2> <%= i.blog_title %> </h2>
-			<p> <%= i.blog_text %> </p>
+			<h2> <%= i.title %> </h2>
+			<p> <%= i.description %> </p>
 		</center></div>
 		<% } %>
 	</dir>
