@@ -15,8 +15,8 @@ app.use(bodyParser.urlencoded({extended:true}))
 var conn={
 	host: "localhost",										//mysql connect database syntax
 	user: "root",
-	password: "aijaj",
-	database: "blog"
+	password: "aijaj123",
+	database: "blog_medium"
 }
 var knex=require("knex")({client: "mysql", connection: conn});  //knex mysql connect using module of knex
 
