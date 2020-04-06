@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 var conn={
 	host: "localhost",										
 	user: "root",
-	password: "aijaj123",
+	password: "database password",
 	database: "blog"
 }
 
