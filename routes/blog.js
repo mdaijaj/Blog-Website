@@ -1,19 +1,38 @@
 const jwt_decode = require('jwt-decode')
-module.exports=(blog,knex)=>{
+var cookie = require("cookie-parser")
 
-	// blog button path
+module.exports=(blog, knex)=>{
+
+	// add blog button fronted
 	blog.get("/post_blog",(req,res)=>{
 		return res.sendFile(__dirname +"/views/post_blog.html")
 	})
 
+	// update blog button fronted
 	blog.get("/update_blog",(req,res)=>{
 		return res.sendFile(__dirname +"/views/update.html")
 	})
 
+	// delete blog button fronted
 	blog.get('/delete_blog',(req,res)=>{
 		return res.sendFile(__dirname + "/views/delete_blog.html")
 	})
 
+
+	// login button backend and fronted code
+	blog.get("/login_home",(req,res)=>{
+		knex
+		.select("*")
+		.from('blog_table')
+		.then((blogdata) => {
+			res.render(__dirname +'/views/login_home.ejs', {data: blogdata})
+		})
+		.catch((err) => {
+			res.send(err);
+		})
+	})
+
+	// only user get data button backend and fronted code
 	blog.get("/all_get",(req,res)=>{
 		var users = req.headers.cookie;
 		// console.log(users)
@@ -21,7 +40,7 @@ module.exports=(blog,knex)=>{
 		users = users[users.length-1]
 		if(users.startsWith	(" qwsdr=")){
 			users = users.slice(7, users.length-1)
-			console.log(users)
+			// console.log(users)
 			var username = jwt_decode(users).email;
 			console.log(username)
 		}
@@ -43,26 +62,28 @@ module.exports=(blog,knex)=>{
 		})
 	})	
 
+
+	// add blog backend code
 	blog.post('/add_blogs', (req,res)=>{
 		var title=req.body.title;
 		var description=req.body.description;
 		var blog_text=req.body.blog_text;
 
 		var token = req.headers.cookie;
-
 		token = token.split(';')
 		token = token[token.length-1]
 		if(token.startsWith(" qwsdr=")){
-			console.log(token)
 			token = token.slice(7, token.length-1)
 			console.log(token)
 			var username = jwt_decode(token);
-			console.log(username)
+			// console.log(username)
 		}
 		// else{
 			// var username = jwt_decode(token[token.length-1]).email;
-		var username=jwt_decode(token).email;
 		// }
+		var username=jwt_decode(token).email;
+		console.log(username)
+		
 		knex('blog_table')
 		.insert({id: null, email: username, title: title, description: description, blog_text: blog_text})
 		.then((result)=>{
@@ -83,18 +104,22 @@ module.exports=(blog,knex)=>{
 		})
 	})
 	
-	blog.get('/all_blogs/:id', (req,res)=>{
-		var id=req.params.id;
-		knex('blog_text').from('blog_table').where('id',id)
-		.then((data)=>{	
-			console.log("done");
-			return res.send(data);
-		})
-		.catch((err)=>{
-			return res.send("Please enter the correct id");
-		})
-	})
+
+	//particlular user find
+	// blog.get('/all_blogs/:id', (req,res)=>{
+	// 	var id=req.params.id;
+	// 	knex('blog_text').from('blog_table').where('id',id)
+	// 	.then((data)=>{	
+	// 		console.log("done");
+	// 		return res.send(data);
+	// 	})
+	// 	.catch((err)=>{
+	// 		return res.send("Please enter the correct id");
+	// 	})
+	// })
 		
+
+	//update blogs backend code.
 	blog.put('/update_blog/:id', (req,res)=>{
 		var id=req.params.id;
 		var title=req.body.title;
@@ -111,6 +136,8 @@ module.exports=(blog,knex)=>{
 		res.send("data updated successfully!")
 	});
 
+
+	//delete blog backend code.
 	blog.delete('/delete_blog/:id', (req,res)=>{
 		knex('blog_table').where('id',req.params.id).delete()
 		.then(()=>{

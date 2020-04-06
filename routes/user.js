@@ -1,20 +1,26 @@
-const jwt_decode = require('jwt-decode')   					//module
+const jwt_decode = require('jwt-decode')   					
 const nodemailer=require('nodemailer')
 
-module.exports=(user,knex,jwt)=>{							//Router
-	var sentOTP=0;
-	var user_details={}										//external varibale define user every endpoints
 
-	//connect files each others end point;
+//Router
+module.exports=(user,knex,jwt)=>{							
+	var sentOTP=0;
+
+	//external varibale define user every endpoints
+	var user_details={}										
+
+	// user signup fronted
 	user.get("/user_signup",(req,res)=>{
 		return res.sendFile(__dirname +"/views/signup.html")
 	})
 	
+	//user login fronted
 	user.get('/user_login', (req,res)=>{
 		return res.sendFile(__dirname +"/views/login.html")
 	})
 
-	// new register
+
+	// new register signup backend
 	user.post("/sign_up", (req,res)=>{
 		var candidate={		
 			"name": req.body.name,
@@ -24,10 +30,8 @@ module.exports=(user,knex,jwt)=>{							//Router
 			"confirm_password": req.body.confirm_password
 		}
 		user_details=candidate;
-
-		var oneTimePass = Math.floor(Math.random()*(999999))
+		var oneTimePass = Math.floor(Math.random()*(9999))
 		sentOTP=oneTimePass;
-
 		if(user_details.password===user_details.confirm_password){
 			knex("users")
 			.select('email').where('email', user_details["email"])
@@ -37,13 +41,14 @@ module.exports=(user,knex,jwt)=>{							//Router
                     res.send("User already register please Click <a href=\"http://127.0.0.1:2050/user_login\">here</a> to login....")
 				}
 				else{
-					var transporter = nodemailer.createTransport({   //use nodemailer
+					// use of nodemailer
+					var transporter = nodemailer.createTransport({ 
                         service: 'gmail',
                         secure: false,
                         port : 25,
                         auth: {
                             user : "aijaj18@navgurukul.org",
-                            pass : "enter your passsword.."
+                            pass : "aijaj@#123"
                         },
                         tls: {
                             rejectUnauthorized:false
@@ -69,9 +74,10 @@ module.exports=(user,knex,jwt)=>{							//Router
 		} 
 	})
 
+
+	// verified backend code
 	user.post("/verify", (req,res)=>{
 		var enteredOTP=req.body.otp
-		console.log(sentOTP)
 		if(enteredOTP==sentOTP){
 			// user['CreatedOn'] = new Date()
 			knex('users')
@@ -91,20 +97,19 @@ module.exports=(user,knex,jwt)=>{							//Router
 	})
 	
 
-	// user login 
+	// user login backend code
 	user.post("/user_login", (req,res)=>{				
-		// var user_email=req.body.email; 				 // dictinary var define out of endpoint upsite 
-		// var user_password=req.body.password;    
-		var data = req.body        						 //get all body data from database
+		var data = req.body        						 
 		var token = jwt.sign(data,'shhhhh',{expiresIn:'1hr'});
+		// console.log(token)
 		res.cookie('qwsdr',token,{overwrite:true})
 		var mycookie = req.headers.cookie;
 		token=mycookie.slice(6,mycookie.length)
 		var decodeToken = jwt_decode(token)
+		// console.log(decodeToken)
 
-		knex
-		.select('*').from('users')
-		.where('email', user_details.email).andWhere('password',user_details.password)
+		knex.select('*').from('users')
+		.where('email', decodeToken.email).andWhere('password', decodeToken.password)
 		.then((result) => {
 			console.log(result)
 			if(result.length>0){
@@ -118,28 +123,17 @@ module.exports=(user,knex,jwt)=>{							//Router
 		})
 	})
 
+
+	// home button backend code
 	user.get("/home",(req,res)=>{
 		knex
 		.select("*")
 		.from('blog_table')
 		.then((blogdata) => {
 			res.render(__dirname +'/views/home.ejs', {data: blogdata});
-			// console.log(blogdata)
 		})
 		.catch((err) => {
 			return res.send(err);
-		})
-	})
-
-	user.get("/login_home",(req,res)=>{
-		knex
-		.select("*")
-		.from('blog_table')
-		.then((blogdata) => {
-			res.render(__dirname +'/views/login_home.ejs', {data: blogdata})
-		})
-		.catch((err) => {
-			res.send(err);
 		})
 	})
 }

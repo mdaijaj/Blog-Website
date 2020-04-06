@@ -1,24 +1,31 @@
+// using mysql knex
 const express=require("express");
 var bodyParser=require("body-parser")
-var cookie = require("cookie-parser")
-var mysql=require("mysql")									// using mysql knex
 const jwt = require('jsonwebtoken')
-const jwt_decode = require('jwt-decode')					//these all module of node js
+// var mysql=require("mysql")									
+				
 
-var app=express();											//this is the framework app express 
+//this is the framework app express 
+var app=express();											
 
-app.set('view engine', 'ejs') 								//use of ejs file ejs convert data and fronted
+//use of ejs file ejs convert data and fronted
+app.set('view engine', 'ejs') 								
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
+//mysql connect database syntax
 var conn={
-	host: "localhost",										//mysql connect database syntax
+	host: "localhost",										
 	user: "root",
-	password: "enter database password",
-	database: "blog_medium"
+	password: "aijaj123",
+	database: "blog"
 }
-var knex=require("knex")({client: "mysql", connection: conn});  //knex mysql connect using module of knex
+
+//knex mysql connect using module of knex
+var knex=require("knex")({
+	client: "mysql", connection: conn
+});  
 
 
 //create users table
@@ -30,11 +37,12 @@ knex.schema.hasTable('users')
 		table1.string('name').notNullable();
 		table1.string('email').unique();
 		table1.string('password');
+		console.log("user table allready exists")
 		})
 		.catch((err)=>{console.log(err.message)})
 	}
 	else{
-		console.log("table is allready exists")
+		console.log("users table is allready exists")
 	}
 });
 
@@ -48,11 +56,11 @@ knex.schema.hasTable('blog_table')
 			table2.string('title').notNullable();
 			table2.string('description').notNullable();
 			table2.string('blog_text');
-			console.log("table has been created");
+			console.log("blog_table has been created");
 		})
 		.catch((err)=>{console.log(err.message)})
 	}else{
-		console.log("table is allready exists")
+		console.log("blog_table is allready exists")
 	}
 });
 
