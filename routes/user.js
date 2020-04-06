@@ -48,7 +48,7 @@ module.exports=(user,knex,jwt)=>{
                         port : 25,
                         auth: {
                             user : "aijaj18@navgurukul.org",
-                            pass : "aijaj@#123"
+                            pass : "enter password"
                         },
                         tls: {
                             rejectUnauthorized:false
