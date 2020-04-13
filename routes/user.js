@@ -47,8 +47,8 @@ module.exports = (user, knex) => {
 							secure: false,
 							port: 25,
 							auth: {
-								user: "aijaj18@navgurukul.org",
-								pass: "aijaj@#123"
+								user: "ng email",
+								pass: "password"
 							},
 							tls: {
 								rejectUnauthorized: false
