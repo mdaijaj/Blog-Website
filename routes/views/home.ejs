@@ -3,12 +3,6 @@
 <head>
 	<title>www.education.com</title>
 	<style>
-		.navigation{
-			height: 150px;
-			width: 100%;
-			background-color: brown;
-			margin-bottom: 25px;
-		}
 		ul{
 			list-style-type: none;
 			overflow: hidden;
@@ -41,18 +35,21 @@
 	</style>
 </head>
 <body bgcolor="#798020">
-	<h1><center> Home Page</center></h1>	
+	<h1><center>Home </center></h1>
 	<ul>
 		<li><a class="active" href="/home">Home</a></li>
 	</ul>
-	<dir class="blogs"> <h1><center> Blogs</center></h1>
+	<!-- <div class="all_blogs"> <h1><center> Blogs</center></h1><br><br> -->
 		<% for (let i of data) { %>
 		<center><div class="runDiv">
-			<h2> <%= i.email %> </h2>
-			<h2> <%= i.title %> </h2>
-			<p> <%= i.description %> </p>
-		</center></div>
+			<h3> <%= i.email %> </h3>
+			<h3> Title  : <%= i.title %> </h3>
+			<p> Description :  <%= i.description %> </p>
+		</div></center>
 		<% } %>
-	</dir>
+	</div>
+
+
 </body>
 </html>
+

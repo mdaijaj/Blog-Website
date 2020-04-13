@@ -1,24 +1,24 @@
 // using mysql knex
 const express=require("express");
-var bodyParser=require("body-parser")
-const jwt = require('jsonwebtoken')
-// var mysql=require("mysql")									
-				
+var bodyParser=require("body-parser")				
 
 //this is the framework app express 
-var app=express();											
+var app=express();										
 
 //use of ejs file ejs convert data and fronted
+app.use(express.static(__dirname + '/Routes/views'))
+app.use(express.static(__dirname + '../public'));
 app.set('view engine', 'ejs') 								
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
+	
 
 //mysql connect database syntax
 var conn={
 	host: "localhost",										
 	user: "root",
-	password: "database password",
+	password: "aijaj123",
 	database: "blog"
 }
 
@@ -27,16 +27,15 @@ var knex=require("knex")({
 	client: "mysql", connection: conn
 });  
 
-
 //create users table
 knex.schema.hasTable('users')
-.then(function(exists){		
+.then((exists)=>{		
 	if (!exists){
-		knex.schema.createTable('users',function(table1){
-		table1.increments('id').primary();
-		table1.string('name').notNullable();
-		table1.string('email').unique();
-		table1.string('password');
+		knex.schema.createTable('users',(table2)=>{
+		table2.increments('id').primary();
+		table2.string('name').notNullable();
+		table2.string('email').unique();
+		table2.string('password');
 		console.log("user table allready exists")
 		})
 		.catch((err)=>{console.log(err.message)})
@@ -48,9 +47,9 @@ knex.schema.hasTable('users')
 
 //create blog_table
 knex.schema.hasTable('blog_table')
-.then(function(exists){		  
+.then((exists)=>{		  
 	if (!exists){
-		knex.schema.createTable('blog_table',function(table2){
+		knex.schema.createTable('blog_table',(table2)=>{
 			table2.increments('id').primary();
 			table2.string('email').notNullable();
 			table2.string('title').notNullable();
@@ -64,15 +63,41 @@ knex.schema.hasTable('blog_table')
 	}
 });
 
+//create categories table
+knex.schema.hasTable('categories')
+.then((exists)=>{		
+	if (!exists){
+		knex.schema.createTable('categories',(table2)=>{
+		table2.increments('id').primary();
+		table2.string('technology').notNullable();
+		table2.string('business')
+		table2.string('art & craft');
+		table2.string('turist');
+		table2.string('stock market')
+		table2.string('finance')
+		table2.string('books')
+		table2.string('culture')
+		table2.string('music')
+		table2.string('game')
+		table2.string('news')
+		console.log("cetegories table allready exists")
+		})
+		.catch((err)=>{console.log(err.message)})
+	}
+	else{
+		console.log("categories table is allready exists")
+	}
+});
+
+
 //this is only for routes or routers
 const user=express.Router();
 app.use('/',user)
-require('./routes/user')(user,knex,jwt)
+require('./routes/user')(user, knex)
 
 const blog=express.Router();
 app.use('/',blog)
 require('./routes/blog')(blog,knex)
-
 
 var port=2050 ;
 app.listen(port,()=>{

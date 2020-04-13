@@ -2,7 +2,14 @@
 <html>
 <head>
 	<title>www.education.com</title>
+	<!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR90pdy9GYa6giEI5UZou5FMvGYszt25EKSHEdZhLvBzH_CewOB&usqp=CAU" alt="Paris" style="width:120px">	 -->
 	<style>
+		.navigation{
+			height: 150px;
+			width: 100%;
+			background-color: yellow;
+			margin-bottom: 20px;
+		}
 		ul{
 			list-style-type: none;
 			overflow: hidden;
@@ -14,10 +21,10 @@
 		}
 		li a {
 		  display: block;
-		  color: brown;
-		  font-size: 22px;
+		  color:lightblue;
+		  font-size: 20px;
 		  text-align: center;
-		  padding: 18px 20px;
+		  padding: 15px 15px;
 		  text-decoration: none;
 		}
 		li a:hover:not(.active) {
@@ -32,28 +39,40 @@
 			width: 50%;
 			background-color: skyblue;
 		}
+		img{
+			border: 1px solid #ddd;
+			border-radius: 100px;
+			padding: 5px;
+		}
 	</style>
 </head>
 <body bgcolor="#798020">
-	<h1><center>Home </center></h1>
+	<h2>Blog Medium</h2>
 	<ul>
 		<li><a class="active" href="/login_home">Home</a></li>
-		<li><a href="/post_blog">Post Blog</a></li>
-		<li><a href="/all_get">Get Blogs</a></li>
-		<li><a href="/update_blog">Update Blog</a></li>
-		<li><a href="/delete_blog">Delete Blog</a></li>
-	  </ul>
-	<div class="all_blogs"> <h1><center> Blogs</center></h1><br><br>
+		<li><a href="/#">technology</a></li>
+		<li><a href="/#">business</a></li>
+		<li><a href="/#">art & craft</a></li>
+		<li><a href="/#">turist</a></li>
+		<li><a href="/#">stock market</a></li>
+		<li><a href="/#">finance</a></li>
+		<li><a href="/#">books</a></li>
+		<li><a href="/#">culture</a></li>
+		<li><a href="/#">music</a></li>
+		<li><a href="/#">game</a></li>
+		<li><a href="/#">news</a></li>
+	</ul>
+
+	<dir class="blogs"> <h2><center> All users</center></h2>
 		<% for (let i of data) { %>
 		<center><div class="runDiv">
-			<h3> <%= i.email %> </h3>
-			<h3> Title  : <%= i.title %> </h3>
-			<p> Description :  <%= i.description %> </p>
-		</div></center>
+			<h3> <%= "once you learn to read you will be forever free"%> </h3>
+
+			<a href="/blog_details?id=<%= i.id%>"> <h2><%= i.title %> </h2></a>
+			<a href="/blog_details?id=<%= i.id%>"> <p><%= i.description %> </p></a>
+			<p> <%= i.email %> </p>
+		</center></div>
 		<% } %>
-	</div>
-
-
+	</dir>
 </body>
 </html>
-
