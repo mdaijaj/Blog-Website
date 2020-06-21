@@ -2,14 +2,20 @@
 <html>
 <head>
 	<title>www.education.com</title>
-	<!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR90pdy9GYa6giEI5UZou5FMvGYszt25EKSHEdZhLvBzH_CewOB&usqp=CAU" alt="Paris" style="width:120px">	 -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="icon" type="image/jpg" href="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRlurn0-lYYsGnuosTSKVkP0I8-buXjIqIU1DWdy71vVkkLIfKZ&usqp=CAU">
+	<center><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR90pdy9GYa6giEI5UZou5FMvGYszt25EKSHEdZhLvBzH_CewOB&usqp=CAU" alt="Paris" style="width:120px">	</center>
 	<style>
 		.navigation{
 			height: 150px;
-			width: 100%;
+			width: 100px;
 			background-color: yellow;
 			margin-bottom: 20px;
 		}
+		body {
+            font: 100% / 162% verdana, arial, helvetica, sans-serif;
+        }
 		ul{
 			list-style-type: none;
 			overflow: hidden;
@@ -34,20 +40,67 @@
 			color: white;
 			background-color: purple;
 		}
-		.runDiv{
-			height: 200px;
-			width: 50%;
-			background-color: skyblue;
-		}
 		img{
-			border: 1px solid #ddd;
-			border-radius: 100px;
+			border: 1px solid black;
+			border-radius: 150px;
 			padding: 5px;
 		}
+		input[type=text] {
+			width: 120px;
+			color: black;
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 25px;
+			font-size: 15px;
+			background-color: rebeccapurple;
+			background-image: url('searchicon.png');
+			background-position: 10px 10px; 
+			background-repeat: no-repeat;
+			padding: 12px 20px 12px 40px;
+			-webkit-transition: width 0.4s ease-in-out;
+			transition: width 0.4s ease-in-out;
+		}
+		input[type=text]:focus {
+			width: 100%;
+		}
+      /* Responsive layout - makes the four columns stack on top of each other instead of next to each other */
+      @media screen and (max-width: 600px) {
+        .column1{
+          width: 100%;
+        }
+      }
+		span.detail_div {
+			display: inline-block;
+			width: 600px;
+			height: 300px;
+			background-color: skyblue;
+			}
+		span.image_div {
+			display: inline-block;
+			width: 200px;
+			height: 300px;
+			background-color: purple; 
+			}
+		.main_div{
+			display: inline-flex;
+			padding: 20px ;
+			}
 	</style>
 </head>
+
 <body bgcolor="#798020">
-	<h2>Blog Medium</h2>
+	<center><h2>Blog Medium</h2></center>
+	<form action="/all_bookmark">
+		<input type="submit", name="all_bookmark" class="material-icons" value="&#xE866;">
+	</form><br>
+
+	<form action= "/search" method="POST"> 
+        <div class="searchBox">
+            <input class="searchInput" class="material-icons" type="text" name="search" , placeholder="Search....." >
+            <inupt class="searchButton" type="submit">
+        </div>
+    </form>
+	
 	<ul>
 		<li><a class="active" href="/login_home">Home</a></li>
 		<li><a href="/#">technology</a></li>
@@ -62,16 +115,36 @@
 		<li><a href="/#">game</a></li>
 		<li><a href="/#">news</a></li>
 	</ul>
-
+	
 	<dir class="blogs"> <h2><center> All users</center></h2>
-		<% for (let i of data) { %>
-		<center><div class="runDiv">
-			<h3> <%= "once you learn to read you will be forever free"%> </h3>
 
-			<a href="/blog_details?id=<%= i.id%>"> <h2><%= i.title %> </h2></a>
-			<a href="/blog_details?id=<%= i.id%>"> <p><%= i.description %> </p></a>
-			<p> <%= i.email %> </p>
-		</center></div>
+		<% for (let i of data) { %>
+		<center><div class="main_div">
+			<span class="detail_div"><h3> once you learn to read you will be forever free</h3>
+				<a href="/blog_details?id=<%= i.id%>"> <h2><%= i.title %> </h2></a>
+				<a href="/blog_details?id=<%= i.id%>"> <h3><%= i.description %> </h3></a>	
+				<a href="/user_detail?id=<%= i.id%>"> <p> <%= i.name %></a> in <a href="/user_detail?id=<%= i.id%>"> <%= i.profession %> </p></a>
+				<p> <%= i.created_at %> </p>
+
+				<pre><a href="/update_blog?id=<%= i.id%>"><i class="material-icons">&#xE254;</i></a>   <a href="/delete_blog?id=<%= i.id%>"> <i class="material-icons">&#xE872;</i></a> </pre> 
+				<pre><a href="/bookmark?id=<%= i.id%>"> <i class="material-icons">&#xE866;</i></a></pre>
+			</span>
+			<span class="image_div">
+				<!-- image_link here and upload image	 -->
+				<!-- <div class="main_div">
+					<img src="i.image_url" alt="aijaj" width="150" height="150" border-radius:150px>
+				</div>  -->
+				<right><div class="image">
+					<% if (i.image_url != '' ){ %>
+						<img src= <%= i.image_url %> alt="image" style="width: 180px; height: 280px;" alt="image"></img>
+						<!-- <img src="https://www.archanaskitchen.com/images/archanaskitchen/1-Author/happytrioexplains-gmail.com/Tandoori_Paneer_Samosa.jpg" style="width: 180px; height: 280px;" alt="image"></img> -->
+
+					<% } else { %>
+						<img src="https://www.jagranimages.com/images/newimg/14062020/14_06_2020-sushant_singh_rajput_20390169.jpg" style="width: 180px; height: 280px;" alt="image"></img>
+					<% } %>
+				</div></right> 
+			</span>
+		</div></center>
 		<% } %>
 	</dir>
 </body>

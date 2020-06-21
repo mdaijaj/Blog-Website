@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    -->
 	<style>
 		ul{
 			list-style-type: none;
@@ -26,6 +27,9 @@
 			color: white;
 			background-color: purple;
 		}
+		input,textarea,select{
+  			background: rgba(255,255,255,0.4);
+		}
 		input[type=text] {
 			width: 15%;
 			padding: 10px 10px;
@@ -50,33 +54,101 @@
 			width: 5%;
 			margin-top: 6px;
 		}
+		.profile{
+			display:flex;
+			align-items: center;
+			flex-direction:column;
+		}
+		.imagechange{
+			height: 220px;
+			width: 200px;
+			border-radius: 25px;
+			margin: -15px 0px -10px 0px;
+			cursor: pointer;
+		}
+		input[type=text], select, textarea {
+			width: 50%;
+			padding: 12px;
+			border: 2px solid black;
+			border-radius: 4px;
+			box-sizing: border-box;
+			margin-top: 6px;
+			margin-bottom: 16px;
+			resize: vertical;
+		}
+		input[type=submit]{
+			background-color: blue;
+			color: white;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		h1{
+		 	text-align:center;
+  			color: white;
+		}
 	</style>
 	<title>www.techeducation.com</title>
+
+	<!-- image upload jqery script -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 <body bgcolor="gray">
 	<h1><center>Blogs</center></h1>
+
 	<ul>
 	  <li><a class="active" href="post_blog">Post Blog</a></li>
 	  <li><a href="/update_blog">Edit Blog</a></li>
 	  <li><a href="/delete_blog">Delete Blog</a></li>
 	  <li><a href="/all_get">Get Blog</a></li>
 	  <li><a href="login_home">Home</a></li>
-	  
 	</ul>
+
 	<h1><center>Post Blogs</center></h1>
 	<div class="main_div">
+		<div class="container">
+		<div class="border">
+
 		<form action="/add_blogs" method="POST">
-		  <label for="lname">Blog Title  : </label>
-		  <input type="text"  name="title" placeholder="Title... " required=""><br><br>
+			<div class="profile">
+				<img name="user_profile" class="imagechange" id="blah" src="https://image.shutterstock.com/z/stock-vector-folder-icon-vector-with-person-personal-file-of-user-profile-information-avatar-in-glyph-pictogram-701343115.jpg">
+				<script>
+				  function readURL(input){               /* script language upload images*/
+					if (input.files && input.files[0]) {
+					  var reader = new FileReader();
+					  reader.onload = function (e) {
+					  $('#blah')
+					  .attr('src', e.target.result)
+					  };
+					  reader.readAsDataURL(input.files[0]);
+					}
+				  }
+				</script>
+			  </div><br>			  
+			<input onchange="readURL(this)" id="form" type="file" name="image_url" value="choose Image"><br><br>
+		
+			<label for="number">Date: </label>
+			<input type="date" name="created_at" placeholder="created_at"... required=""><br><br>
 
-		  <label for="lname">Description:</label>
-		  <input type="text"  name="description" placeholder="Enter Description..."><br><br>
+			<label for="lname">username  : </label>
+			<input type="text"  name="name" placeholder="username... " required=""><br><br>
+			
+			<label for="lname">Profession  : </label>
+			<input type="text"  name="profession" placeholder="Profession... " required=""><br><br>
 
-      	  <label for="subject">Blog text : </label><br><br>
-		  <textarea name="blog_text" placeholder="Some text..."></textarea><br><br>
+			<label for="lname">Blog Title  : </label>
+			<input type="text"  name="title" placeholder="Title... " required=""><br><br>
 
-		  <input type="Submit" value="Submit">
-		  <input type="button" value="Reset">
+			<label for="lname">Description:</label>
+			<input type="text"  name="description" placeholder="Enter Description..."><br><br>
+
+			<label for="subject">Blog text : </label><br><br>
+			<textarea name="blog_text" placeholder="Some text..."></textarea><br><br>
+		  
+			<input type="Submit" value="Submit">
+			<input type="button" value="Reset">
 		</form>
 	</div>
 </body>

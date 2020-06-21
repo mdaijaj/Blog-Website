@@ -47,8 +47,8 @@ module.exports = (user, knex) => {
 							secure: false,
 							port: 25,
 							auth: {
-								user: "ng email",
-								pass: "password"
+								user: "aijaj18@navgurukul.org",
+								pass: "aijaj@#123"
 							},
 							tls: {
 								rejectUnauthorized: false
@@ -100,11 +100,14 @@ module.exports = (user, knex) => {
 	// user login backend code
 	user.post("/user_login", (req, res) => {
 		var data = req.body
-		var token = jwt.sign(data, 'shhhhh', { expiresIn: '1hr' });
+		console.log(data)
+		var token = jwt.sign(data, 'shhhhh', { expiresIn: '2hr' });
 		// console.log(token)
 		res.cookie('qwsdr', token, { overwrite: false })
 		var mycookie = req.headers.cookie;
+		// console.log(mycookie)
 		token = mycookie.slice(6, mycookie.length)
+		// console.log(token)
 		var decodeToken = jwt_decode(token)
 		// console.log(decodeToken)
 		knex.select('*').from('users')
@@ -114,8 +117,8 @@ module.exports = (user, knex) => {
 			if(result.length > 0) {
 				knex.select("*").from("blog_table")
 					.then((data) => {
-						console.log(data)
-						return res.render(__dirname + '/views/login_home.ejs', { data: data })
+						console.log(data,result)
+						return res.render(__dirname + '/views/login_home.ejs', { data: data, result })
 					})
 					.catch((err)=>{
 						console.log(err)

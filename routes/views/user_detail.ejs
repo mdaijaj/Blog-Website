@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>www.education.com</title>
+	<style>
+		.navigation{
+			height: 150px;
+			width: 100%;
+			background-color: yellow;
+			margin-bottom: 20px;
+		}
+		ul{
+			list-style-type: none;
+			overflow: hidden;
+			border: 1px solid black;
+			background-color: green;
+		}
+		li{
+			float: left;
+		}
+		li a {
+		  display: block;
+		  color:lightblue;
+		  font-size: 20px;
+		  text-align: center;
+		  padding: 15px 15px;
+		  text-decoration: none;
+		}
+		li a:hover:not(.active) {
+  			background-color: black;
+		}
+		li a.active{
+			color: white;
+			background-color: purple;
+		}
+		.runDiv{
+			height: 500px;
+			width: 80%;
+			background-color: skyblue;
+			padding: 15px;
+		}
+		img{
+			border: 1px solid #ddd;
+			border-radius: 70px;
+			padding: 5px;
+			margin-bottom: 5px;
+		}
+		.container1{
+			height: 400px;
+			width: 80%;
+			background-color: skyblue;
+			align-content: center;
+			border: slateblue;
+			margin-top: 25%;
+			margin-left: 10%;
+			font-size: 12px;
+			
+		}
+		.container2{
+			height: 300px;
+			width: 100%;
+			background-color: black;
+			padding: -30px;
+		}	
+		.blogs{
+			height: 550px;
+			width: 100%;
+			border-style: solid;
+			color: chocolate;
+			text-align: center;
+		}
+		.sub_div{
+			color: yellow;
+			height: 300px;
+			width: 100%;
+			border-radius: 0px 0px 50px 50px;
+			background-color: lightgray;
+			text-align: center;
+			padding: 10px;
+		}
+		.h1{
+			opacity: 0.7;
+			background-color: black;
+			color:yellow;
+		}
+		.form{
+			font-size: 22px;
+		}
+		.pre{
+			font-size: 15px;
+			color: black;
+			padding: 10px;
+		}
+		#faa
+		{
+			width:100px;
+			height:100px;
+			font-size: 75px;
+			text-align: center;
+			padding: 10px;
+		}
+
+	</style>
+</head>
+<body bgcolor="#798020">
+	<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR90pdy9GYa6giEI5UZou5FMvGYszt25EKSHEdZhLvBzH_CewOB&usqp=CAU" alt="Paris" style="width:70px">	
+	<ul>
+		<li><a class="active" href="/home">Home</a></li>
+		<li><a href="/post_blog">Post Blog</a></li>
+		<li><a href="/all_get">Get_userBlog</a></li>
+		<li><a href="/#">Bussiness</a></li>
+		<li><a href="/#">Technology</a></li>
+	</ul>
+	<% for (let i of data) { %>
+	<center><div class="runDiv">
+		<h1> <%= i.name %>  <%= i.professional %> </h1>
+		<b><p> <%= i.email %> </p></b>
+		<p> <%= i.blog_text %> </p>
+		
+		<h3><pre> <a href="/follower"> Followers</a>     <a href="following" >Following</a></pre></h3>
+		
+		<p id="demo"></p>
+		<button onclick="myFunction()">Follow</button>
+		<script>
+			function myFunction() {
+				var i=0
+				i+=1
+			  document.getElementById("demo").innerHTML = "Following";
+			}
+		</script>
+	</center></div>
+	<% } %>
+
+	
+
+
+	<div class="container1">
+		<center><h1>Get unlimited access.</h1></center>
+		<pre class="pre">
+	You've read all of your free stories this month. Become a member to keep reading.
+	Upgrade
+	You’re seeing this because you’ve read your limit of free stories this month. 
+	We know, paywalls can get in the way. But by charging a small fee for memberships, 
+	we’re able to create a better way to read online — one built for you, not advertisers.
+	
+	When you upgrade to Medium membership, you’ll get unlimited access to our entire ad-free
+	library of unique content. You’ll also directly support the writers, thinkers, 
+	and creators who call Medium home.
+	
+	Each month, as you read stories, part of your membership fee will go to their authors. 
+	We do this because we, like you, believe in rewarding stories that matter. 
+	The more quality content you read, the more quality creators are rewarded, 
+	the more quality stories they can continue to produce.
+	
+	And you make that possible.
+	
+	Join us, and discover more ideas that can change the way you think, live, and work.</pre>
+	</div>
+
+	<div class="blogs" id="feedback">
+		<h1 class="h1">Feedback</h1>
+		<form class="form" action="/feedback", method="POST">
+			<label for="name">Name :  </label>
+			<input type="text" name="name" class="inp" placeholder="Enter your name" required><br><br>
+
+			<label for="name">Email :  </label>
+			<input type="email" name="Email" class="inp" placeholder="Enter your Email" required><br><br>
+
+			<label for="name">Phone :  </label>
+				<input type="number" name="Phone" class="inp" placeholder="Enter your Phone number" required><br><br>
+
+			<label for="name">Comments :  </label><br><br>
+			<textarea rows="10" cols="50" id="message-box" class="inp" placeholder="Type here comments..........." required></textarea><br><br>
+
+			<input type="submit" name="submit" value="send" class="sub-btn" >  
+			<input type="button" name="reset" value="Reset" class="sub-btn" >
+
+		</form>
+	</div>
+
+
+	<div class="sub_div"> 
+		<h1 class="h1"><b>Social Media</h1></b>
+		<a href="https://www.instagram.com/md.aijaj.535/" class="fa fa-instagram" id="faa">			</a>
+		<a href="https://www.google.co.in/" class="fa fa-google" id="faa"></a>
+		<a href="https://www.linkedin.com/in/md-aijaj-5b9127174/" class="fa fa-linkedin-square" id="faa"></a>
+		<a href="https://www.youtube.com/"  class="fa fa-youtube-play" id="faa"></a>
+		<a href="https://mail.google.com/mail/u/0/#inbox" class="fa fa-envelope-o" id="faa"			></a>
+		<a href="https://www.facebook.com/md.aijaj.583" class="fa fa-facebook-official" id="faa"></a>
+		<a href="https://github.com/mdaijaj" class="fa fa-github-square" id="faa"></a>
+		<!-- <ul>
+			<li><img class="items" src="https://coindoo.com/wp-content/uploads/2019/01/facebook-icon.png"><a href="https://www.facebook.com/md.aijaj.583" ></a></li>
+		</ul> -->
+	</div>
+
+
+	<div class="container2">
+		<center><h2>button tamplates</h2></center>
+	</div>
+</body>
+</html>

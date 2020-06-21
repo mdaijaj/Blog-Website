@@ -32,10 +32,33 @@
 			width: 50%;
 			background-color: skyblue;
 		}
+input[type=text] {
+  width: 130px;
+  color: black;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: rebeccapurple;
+  background-image: url('searchicon.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+  width: 100%;
+}
 	</style>
 </head>
 <body bgcolor="#798020">
 	<h1><center>Home </center></h1>
+
+	<form action="/search", method="GET"> 
+		<input type="text" name="search" placeholder="Search..">
+	</form>
 	<ul>
 		<li><a class="active" href="/home">Home</a></li>
 	</ul>
