@@ -1,6 +1,7 @@
 const jwt_decode = require('jwt-decode')
 const nodemailer = require('nodemailer')
-const jwt = require('jsonwebtoken')								
+const jwt = require('jsonwebtoken')	
+require('dotenv').config()
 
 //Router
 module.exports = (user, knex) => {
@@ -38,7 +39,7 @@ module.exports = (user, knex) => {
 				.then((data) => {
 					// console.log(data)
 					if (data.length > 0) {
-						res.send("User already register please Click <a href=\"http://127.0.0.1:2050/user_login\">here</a> to login....")
+						res.send("User already register please Click <a href=\"http://13.127.38.252:2050/user_login\">here</a> to login....")
 					}
 					else {
 						// use of nodemailer
@@ -47,8 +48,8 @@ module.exports = (user, knex) => {
 							secure: false,
 							port: 25,
 							auth: {
-								user: "aijaj18@navgurukul.org",
-								pass: "aijaj@#123"
+								user: process.env.user,
+								pass: process.env.pass
 							},
 							tls: {
 								rejectUnauthorized: false

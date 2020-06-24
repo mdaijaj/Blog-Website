@@ -31,6 +31,7 @@
 			height: 200px;
 			width: 50%;
 			background-color: skyblue;
+			border-radius: 40px 10px;
 		}
 input[type=text] {
   width: 130px;
@@ -56,11 +57,17 @@ input[type=text]:focus {
 <body bgcolor="#798020">
 	<h1><center>Home </center></h1>
 
-	<form action="/search", method="GET"> 
-		<input type="text" name="search" placeholder="Search..">
+	<form action= "/search" method="POST"> 
+        <div class="searchBox">
+            <input class="searchInput" class="material-icons" type="text" name="search" , placeholder="Search....." >
+            <inupt class="searchButton" type="submit">
+        </div>
 	</form>
+	
 	<ul>
 		<li><a class="active" href="/home">Home</a></li>
+		<li><a href="/user_login">Login</a></li>
+	  	<li><a href="/user_signup">Signup</a></li>
 	</ul>
 	<!-- <div class="all_blogs"> <h1><center> Blogs</center></h1><br><br> -->
 		<% for (let i of data) { %>

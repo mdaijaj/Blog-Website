@@ -2,8 +2,7 @@
 const express=require("express");
 var bodyParser=require("body-parser")	
 var fileupload = require("express-fileupload");
-const cors = require('cors');
-
+require('dotenv').config()
 
 //this is the framework app express
 var app=express();										
@@ -15,15 +14,12 @@ app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
-app.use(cors())
 
-
-//mysql connect database syntax
 var conn={
-	host: "localhost",										
-	user: "root",
-	password: "aijaj123",
-	database: "blog"
+	host: process.env.DB_HOST,										
+	user: process.env.DB_USER,
+	password: process.env.DB_PASS,
+	database: process.env.DB_NAME
 }
 
 //knex mysql connect using module of knex
@@ -127,7 +123,7 @@ knex.schema.hasTable('bookmark')
 	if (!exists){
 		knex.schema.createTable('bookmark',(table5)=>{
 		table5.increments('id').primary();
-		table5.integer('blog_id').notNullable();
+		table5.integer('blog_id').unique();
 		table5.foreign('blog_id').references('id').inTable('blog_table');
 		console.log("bookmark table  created success")
 		})
@@ -159,11 +155,11 @@ knex.schema.hasTable('follow')
 
 //this is only for routes or routers
 const user=express.Router();
-app.use('/',user)
+app.use('/', user)
 require('./routes/user')(user, knex)
 
 const blog=express.Router();
-app.use('/',blog)
+app.use('/', blog)
 require('./routes/blog')(blog,knex)
 
 const feed=express.Router();

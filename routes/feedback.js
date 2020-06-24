@@ -21,20 +21,24 @@ module.exports=(feed, knex)=>{
     // bookmark fronted and backend api
     feed.get('/bookmark', (req,res)=>{
         knex('bookmark').insert({blog_id: req.query.id})
-        .then((data)=>{ 
+        .then((data)=>{
+            console.log(data)
             console.log("insert bookmark successfully")
             return res.send("bookmark saved successfully!")
         }).catch((err)=>{
-            console.log(err)
-            return res.send("id not pass")
+            console.log("allready saved bookmark")
+            return res.send("all ready saved bookmark")
         })
+        
     })
     
 
     // all bookmark fronted api
     feed.get('/all_bookmark', (req,res)=>{
-        knex.select('*').from('bookmark').join('blog_table', 'bookmark.blog_id', '=', 'blog_table.id')
+        knex('bookmark').join('blog_table', 'bookmark.blog_id', '=', 'blog_table.id')
         .then((data)=>{
+            
+            console.log(data)
             console.log("all show bookmark and show only one tamplate")
             return res.render(__dirname +'/views/login_home.ejs', {data: data});
         })
