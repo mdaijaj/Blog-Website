@@ -5,7 +5,8 @@ var fileupload = require("express-fileupload");
 require('dotenv').config()
 
 //this is the framework app express
-var app=express();										
+var app=express();	
+
 
 //use of ejs file ejs convert data and fronted
 app.use(express.static(__dirname + '/Routes/views'))
@@ -21,6 +22,7 @@ var conn={
 	password: process.env.DB_PASS,
 	database: process.env.DB_NAME
 }
+
 
 //knex mysql connect using module of knex
 var knex=require("knex")({
@@ -115,42 +117,44 @@ knex.schema.hasTable('feedback')
 		console.log("feedback table is allready exists")
 	}
 });
+    
+        
+    //bookmark table
+    knex.schema.hasTable('bookmark')
+    .then((exists)=>{		
+        if (!exists){
+            knex.schema.createTable('bookmark',(table5)=>{
+            table5.increments('id').primary();
+            table5.integer('blog_id').unique();
+            table5.foreign('blog_id').references('id').inTable('blog_table');
+            console.log("bookmark table  created success")
+            })
+            .catch((err)=>{console.log(err.message)})
+        }
+        else{
+            console.log("bookmark table is allready exists")
+        }
+    });
+    
+    
+    // followers and following  table
+    knex.schema.hasTable('follow')
+    .then((exists)=>{		
+        if (!exists){
+            knex.schema.createTable('follow',(table6)=>{
+            table6.increments('id').primary();
+            table6.string('email').notNullable();
+            table6.foreign('email').references('id').inTable('users');
+            console.log("follow table  created success")
+            })
+            .catch((err)=>{console.log(err.message)})
+        }
+        else{
+            console.log("follow table is allready exists")
+        }
+    });
+    
 
-	
-//bookmark table
-knex.schema.hasTable('bookmark')
-.then((exists)=>{		
-	if (!exists){
-		knex.schema.createTable('bookmark',(table5)=>{
-		table5.increments('id').primary();
-		table5.integer('blog_id').unique();
-		table5.foreign('blog_id').references('id').inTable('blog_table');
-		console.log("bookmark table  created success")
-		})
-		.catch((err)=>{console.log(err.message)})
-	}
-	else{
-		console.log("bookmark table is allready exists")
-	}
-});
-
-
-// followers and following  table
-knex.schema.hasTable('follow')
-.then((exists)=>{		
-	if (!exists){
-		knex.schema.createTable('follow',(table6)=>{
-		table6.increments('id').primary();
-		table6.string('email').notNullable();
-		table6.foreign('email').references('id').inTable('users');
-		console.log("follow table  created success")
-		})
-		.catch((err)=>{console.log(err.message)})
-	}
-	else{
-		console.log("follow table is allready exists")
-	}
-});
 
 
 //this is only for routes or routers
