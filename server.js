@@ -29,7 +29,6 @@ var knex=require("knex")({
 	client: "mysql", connection: conn
 });  
 
-
 //create users table
 knex.schema.hasTable('users')
 .then((exists)=>{		
@@ -119,43 +118,41 @@ knex.schema.hasTable('feedback')
 });
     
         
-    //bookmark table
-    knex.schema.hasTable('bookmark')
-    .then((exists)=>{		
-        if (!exists){
-            knex.schema.createTable('bookmark',(table5)=>{
-            table5.increments('id').primary();
-            table5.integer('blog_id').unique();
-            table5.foreign('blog_id').references('id').inTable('blog_table');
-            console.log("bookmark table  created success")
-            })
-            .catch((err)=>{console.log(err.message)})
-        }
-        else{
-            console.log("bookmark table is allready exists")
-        }
-    });
+	//bookmark table
+	knex.schema.hasTable('bookmark')
+	.then((exists)=>{		
+		if (!exists){
+			knex.schema.createTable('bookmark',(table5)=>{
+			table5.increments('id').primary();
+			table5.integer('blog_id').unique();
+			table5.foreign('blog_id').references('id').inTable('blog_table');
+			console.log("bookmark table  created success")
+			})
+			.catch((err)=>{console.log(err.message)})
+		}
+		else{
+			console.log("bookmark table is allready exists")
+		}
+	});
     
     
-    // followers and following  table
-    knex.schema.hasTable('follow')
-    .then((exists)=>{		
-        if (!exists){
-            knex.schema.createTable('follow',(table6)=>{
-            table6.increments('id').primary();
-            table6.string('email').notNullable();
-            table6.foreign('email').references('id').inTable('users');
-            console.log("follow table  created success")
-            })
-            .catch((err)=>{console.log(err.message)})
-        }
-        else{
-            console.log("follow table is allready exists")
-        }
-    });
+	// followers and following  table
+	knex.schema.hasTable('follow')
+	.then((exists)=>{		
+		if (!exists){
+			knex.schema.createTable('follow',(table6)=>{
+			table6.increments('id').primary();
+			table6.string('email').notNullable();
+			table6.foreign('email').references('id').inTable('users');
+			console.log("follow table  created success")
+			})
+			.catch((err)=>{console.log(err.message)})
+		}
+		else{
+			console.log("follow table is allready exists")
+		}
+	});
     
-
-
 
 //this is only for routes or routers
 const user=express.Router();

@@ -48,11 +48,12 @@ module.exports = (user, knex) => {
 							secure: false,
 							port: 25,
 							auth: {
-								user: process.env.user,
-								pass: process.env.pass
+								user: "aijaj18@navgurukul.org",
+								pass: "aijaj@#123"
+								// pass: process.env.pass
 							},
 							tls: {
-								rejectUnauthorized: false
+								rejectUnauthorized: true
 							}
 						});
 						var mailOptions = {
