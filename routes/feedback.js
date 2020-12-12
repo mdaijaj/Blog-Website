@@ -1,5 +1,6 @@
 const aws = require("aws-sdk");
 var fileupload = require("express-fileupload");
+const path=require('path')
 
 
 module.exports=(feed, knex)=>{
@@ -10,7 +11,7 @@ module.exports=(feed, knex)=>{
         .then((data)=>{
             console.log(data)
             console.log("feedback sent sucessfully")
-            return res.sendFile(__dirname + '/views/submit.html')
+            return res.sendFile(path.join(__dirname, '../' + '/views/submit.html'))
         })
         .catch((err)=>{
             console.log(err)
@@ -40,7 +41,7 @@ module.exports=(feed, knex)=>{
             
             console.log(data)
             console.log("all show bookmark and show only one tamplate")
-            return res.render(__dirname +'/views/login_home.ejs', {data: data});
+            return res.render('login_home.ejs', {data: data});
         })
         .catch((err)=>{
             console.log(err)
@@ -67,7 +68,7 @@ module.exports=(feed, knex)=>{
         .then((data)=>{
             console.log(data)
             console.log("all show bookmark and show only one tamplate")
-            return res.render(__dirname +'/views/follow.ejs', {data: data});
+            return res.render('follow.ejs', {data: data});
         })
         .catch((err)=>{
             console.log(err)
@@ -81,7 +82,7 @@ module.exports=(feed, knex)=>{
         .then((data)=>{
             console.log(data)
             console.log("all show bookmark and show only one tamplate")
-            return res.render(__dirname +'/views/follow.ejs', {data: data});
+            return res.render('follow.ejs', {data: data});
         })
         .catch((err)=>{
             console.log(err)

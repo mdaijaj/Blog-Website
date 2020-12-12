@@ -1,21 +1,22 @@
 const jwt_decode = require('jwt-decode')
 var cookie = require("cookie-parser")
+const path=require('path')
 
 
 module.exports=(blog, knex)=>{
 
 	// add blog button fronted
 	blog.get("/post_blog",(req,res)=>{
-		return res.sendFile(__dirname +"/views/post_blog.html")
+		return res.sendFile(path.join(__dirname, '../' + '/views/post_blog.html'))
 	})
 
 	// update blog button fronted
 	blog.get("/update_blog",(req,res)=>{
-		return res.sendFile(__dirname +"/views/update.html")
+		return res.sendFile(path.join(__dirname, '../' + '/views/update.html'))
 	})
 
 	blog.get("/imageupload", (req,res)=>{
-		return res.sendFile(__dirname + "/views/imageupload.html")
+		return res.sendFile(path.join(__dirname, '../' + '/views/imageupload.html'))
 	})
 	// delete blog button fronted
 	// blog.get('/delete_blog',(req,res)=>{
@@ -42,7 +43,7 @@ module.exports=(blog, knex)=>{
 		knex.select("*").from('blog_table').where('email', username)
 		.then((blogdata) => {
 			console.log(blogdata)
-			return res.render(__dirname+'/views/all_get.ejs', {data: blogdata})
+			return res.render('all_get.ejs', {data: blogdata})
 		})
 		.catch((err) => {
 			res.send(err);
@@ -82,7 +83,7 @@ module.exports=(blog, knex)=>{
 			knex.select("*").from("blog_table")
 			.then((select_result) => {
 				// console.log(select_result)
-				return res.render(__dirname +'/views/login_home.ejs', {data: select_result});
+				return res.render('login_home.ejs', {data: select_result});
 			})
 			.catch((err) => {
 				console.log(err);
@@ -103,7 +104,7 @@ module.exports=(blog, knex)=>{
 		knex.select("*").from('blog_table').where('id', req.query.id)
 		.then((blogdata) => {
 			console.log(blogdata)
-			return res.render(__dirname + '/views/blog_details.ejs', { data: blogdata })
+			return res.render('blog_details.ejs', { data: blogdata })
 		})
 		.catch((err) => {
 			res.send(err);
@@ -115,7 +116,7 @@ module.exports=(blog, knex)=>{
 		knex.select("*").from("blog_table").where('id', req.query.id)
 		.then((data)=>{
 			console.log(data)
-			return res.render(__dirname + '/views/user_detail.ejs', {data: data})
+			return res.render('user_detail.ejs', {data: data})
 		})
 		.catch((err)=>{
 			console.log(err)
@@ -127,7 +128,7 @@ module.exports=(blog, knex)=>{
 	blog.get("/login_home", (req, res) => {
 		knex.select("*").from('blog_table')
 		.then((blogdata) => {
-			res.render(__dirname + '/views/login_home.ejs', { data: blogdata });
+			res.render('login_home.ejs', { data: blogdata });
 		})
 		.catch((err) => {
 			return res.send(err);
@@ -142,7 +143,7 @@ module.exports=(blog, knex)=>{
 		knex('blog_table').where('title', 'like', '%'+keyvalues +'%').orWhere('email', 'like', '%'+keyvalues +'%')
 		.then((data)=>{
 			console.log(data)
-			return res.render(__dirname + "/views/search.ejs", {data: data});
+			return res.render("search.ejs", {data: data});
 		})
 		.catch((err)=>{
 			console.log(err)
@@ -172,7 +173,7 @@ module.exports=(blog, knex)=>{
 
 			knex.select("*").from("blog_table")
 			.then((select_result) => {
-				return res.render(__dirname +'/views/login_home.ejs', {data: select_result});
+				return res.render('login_home.ejs', {data: select_result});
 			})
 			.catch((err) => {
 				console.log(err);
@@ -190,7 +191,7 @@ module.exports=(blog, knex)=>{
 		.then(()=>{
 			knex.select("*").from("blog_table")
 			.then((all_data)=>{
-				return res.render(__dirname +"/views/login_home.ejs", {data: all_data})
+				return res.render("login_home.ejs", {data: all_data})
 			})
 			.catch((err)=>{
 				console.log("error while querry ", err)
@@ -202,8 +203,7 @@ module.exports=(blog, knex)=>{
 	})
 
 
-	// // image upload using multer module
-	
+	// // // image upload using multer module
 	// const storage=multer.diskStorage({
 	// 	destination: './public/uploads/', 
 	// 	filename: (req,res,cb)=>{

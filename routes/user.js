@@ -1,6 +1,7 @@
 const jwt_decode = require('jwt-decode')
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')	
+const path=require('path')
 require('dotenv').config()
 
 //Router
@@ -8,12 +9,12 @@ module.exports = (user, knex) => {
 
 	// user signup fronted
 	user.get("/user_signup", (req, res) => {
-		return res.sendFile(__dirname + "/views/signup.html")
+		return res.sendFile(path.join(__dirname, '../' + '/views/signup.html'))
 	})
 
 	//user login fronted
 	user.get('/user_login', (req, res) => {
-		return res.sendFile(__dirname + "/views/login.html")
+		return res.sendFile(path.join(__dirname, '../' + '/views/login.html'))
 	})
 
 
@@ -37,7 +38,6 @@ module.exports = (user, knex) => {
 			knex("users")
 				.select('email').where('email', user_details["email"])
 				.then((data) => {
-					// console.log(data)
 					if (data.length > 0) {
 						res.send("User already register please Click <a href=\"http://13.127.38.252:2050/user_login\">here</a> to login....")
 					}
@@ -48,8 +48,8 @@ module.exports = (user, knex) => {
 							secure: false,
 							port: 25,
 							auth: {
-								user: "enter your nav email id",
-								pass: "enter your password"
+								user: "aijaj18@navgurukul.org",
+								pass: "aijaj@#123"
 								// pass: process.env.pass
 							},
 							tls: {
@@ -64,7 +64,7 @@ module.exports = (user, knex) => {
 						};
 						if (transporter.sendMail(mailOptions)) {
 							console.log(sentOTP)
-							res.sendFile(__dirname + '/views/otp.html')
+							res.sendFile(path.join(__dirname, '../' + '/views/otp.html'))
 						}
 						else {
 							res.send("Couldn't send OTP.")
@@ -86,7 +86,7 @@ module.exports = (user, knex) => {
 				.insert({ name: user_details.name, email: user_details.email, password: user_details.password })
 				.then((data) => {
 					console.log("sign_up is successfully!")
-					return res.sendFile(__dirname + "/views/login.html")
+					return res.sendFile(path.join(__dirname, '../' + '/views/login.html'))
 				})
 				.catch((err) => {
 					console.log(err.message);
@@ -94,33 +94,28 @@ module.exports = (user, knex) => {
 				})
 		} else {
 			console.log("aijaj Invalid OTP! Please input correct OTP.......")
-			res.sendFile(__dirname + "/views/otp.html")
+			res.sendFile(path.join(__dirname, '../' + '/views/otp.html'))
 		}
 	})
 
 
-	// user login backend code
+	// user login backend code4205
 	user.post("/user_login", (req, res) => {
 		var data = req.body
 		console.log(data)
 		var token = jwt.sign(data, 'shhhhh', { expiresIn: '2hr' });
-		// console.log(token)
 		res.cookie('qwsdr', token, { overwrite: false })
 		var mycookie = req.headers.cookie;
-		// console.log(mycookie)
 		token = mycookie.slice(6, mycookie.length)
-		// console.log(token)
 		var decodeToken = jwt_decode(token)
-		// console.log(decodeToken)
 		knex.select('*').from('users')
 		.where('email', decodeToken.email).andWhere('password', decodeToken.password)
 		.then((result) => {
-			// console.log(result)
 			if(result.length > 0) {
 				knex.select("*").from("blog_table")
 					.then((data) => {
 						console.log(data,result)
-						return res.render(__dirname + '/views/login_home.ejs', { data: data, result })
+						return res.render('login_home.ejs', { data: data, result })
 					})
 					.catch((err)=>{
 						console.log(err)
@@ -140,7 +135,7 @@ module.exports = (user, knex) => {
 	user.get("/home",(req,res)=>{
 		knex.select("*").from('blog_table')
 		.then((blogdata) => {
-			res.render(__dirname +'/views/home.ejs', {data: blogdata})
+			res.render('home.ejs', {data: blogdata})
 		})
 		.catch((err) => {
 			res.send(err);
