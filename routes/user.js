@@ -48,8 +48,8 @@ module.exports = (user, knex) => {
 							secure: false,
 							port: 25,
 							auth: {
-								user: "aijaj18@navgurukul.org",
-								pass: "aijaj@#123"
+								user: "enter your email id",
+								pass: "enter your password"
 								// pass: process.env.pass
 							},
 							tls: {
